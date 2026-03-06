@@ -1,1 +1,14 @@
 {"ts":"2026-03-06T08:56:52.768Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"konsta"}}
+{"ts":"2026-03-06T09:00:54.360Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"alisher"}}
+{"ts":"2026-03-06T09:01:40.088Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"eminem"}}
+{"ts":"2026-03-06T09:07:07.054Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"/popular_tracks"}}
+{"ts":"2026-03-06T09:08:45.882Z","level":"error","message":"Unhandled bot error","data":{"error":"GrammyError in middleware: Call to 'answerCallbackQuery' failed! (400: Bad Request: query is too old and response timeout expired or query ID is invalid)","ctx":{"update_id":933979928,"callback_query":{"id":"3033127734361936574","from":{"id":7148656026,"is_bot":false,"first_name":"Murodjon","username":"Murodjon_Sotiboldiyev","language_code":"ru"},"message":{"message_id":280,"from":{"id":8631373032,"is_bot":true,"first_name":"Downloader-bot","username":"Yt_Downloeader_bot"},"chat":{"id":7148656026,"first_name":"Murodjon","username":"Murodjon_Sotiboldiyev","type":"private"},"date":1772788022,"edit_date":1772788056,"text":"🎬 Sifatni tanlang:","reply_markup":{"inline_keyboard":[[{"text":"720p · ~253 MB","callback_data":"sifat:720"}],[{"text":"1080p · ~383 MB","callback_data":"sifat:1080"}],[{"text":"↩ Orqaga","callback_data":"type:back"}]]}},"chat_instance":"-7610071147344193974","data":"sifat:720"}}}}
+{"ts":"2026-03-06T09:08:57.086Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"/popular_tracks"}}
+{"ts":"2026-03-06T09:11:20.757Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"aga"}}
+{"ts":"2026-03-06T09:14:07.354Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"aga"}}
+{"ts":"2026-03-06T09:14:46.830Z","level":"info","message":"Qidiruv so'rovi","data":{"userId":7148656026,"query":"aga"}}
+{"ts":"2026-03-06T09:15:50.661Z","level":"info","message":"Havola qabul qilindi","data":{"userId":7148656026,"platform":"youtube","url":"https://youtu.be/S3ktzQ3RXHU"}}
+{"ts":"2026-03-06T09:16:35.977Z","level":"info","message":"Havola qabul qilindi","data":{"userId":7148656026,"platform":"youtube","url":"https://youtu.be/S3ktzQ3RXHU"}}
+{"ts":"2026-03-06T09:17:23.831Z","level":"info","message":"Havola qabul qilindi","data":{"userId":7148656026,"platform":"youtube","url":"https://youtu.be/Hq1xqoS-YpE"}}
+{"ts":"2026-03-06T09:18:06.106Z","level":"info","message":"Havola qabul qilindi","data":{"userId":7148656026,"platform":"instagram","url":"https://www.instagram.com/reel/DUw9TpLAbKS/"}}
+{"ts":"2026-03-06T09:18:23.283Z","level":"info","message":"Havola qabul qilindi","data":{"userId":7148656026,"platform":"instagram","url":"https://www.instagram.com/reel/DUw9TpLAbKS/"}}

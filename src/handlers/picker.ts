@@ -236,7 +236,6 @@ export function buildQualityKeyboard(meta: VideoMetadata): InlineKeyboard {
 export async function handleCallbackQuery(ctx: Context): Promise<void> {
   if (!ctx.callbackQuery?.data || !ctx.from) return;
 
-  // Search callbacklarni search handleriga yo'naltirish
   if (
     ctx.callbackQuery.data.startsWith('search_pick:') ||
     ctx.callbackQuery.data.startsWith('search_page:') ||
@@ -252,7 +251,6 @@ export async function handleCallbackQuery(ctx: Context): Promise<void> {
   const userId = ctx.from.id;
   const data = ctx.callbackQuery.data;
 
-  // --- Back tugmasi ---
   if (data === 'type:back') {
     const pending = getPending(userId);
     if (!pending) {
@@ -265,7 +263,6 @@ export async function handleCallbackQuery(ctx: Context): Promise<void> {
     return;
   }
 
-  // --- Audio tanlovi ---
   if (data === 'type:audio') {
     const pending = getPending(userId);
     if (!pending) {
@@ -277,7 +274,6 @@ export async function handleCallbackQuery(ctx: Context): Promise<void> {
     return;
   }
 
-  // --- Video tanlovi ---
   if (data === 'type:video') {
     const pending = getPending(userId);
     if (!pending) {
@@ -302,7 +298,6 @@ export async function handleCallbackQuery(ctx: Context): Promise<void> {
     return;
   }
 
-  // --- Video sifatini tanlash ---
   if (data.startsWith('sifat:')) {
     const pending = getPending(userId);
     if (!pending) {

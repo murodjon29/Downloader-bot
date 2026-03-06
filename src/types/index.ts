@@ -1,6 +1,6 @@
 export type Platform = 'youtube' | 'instagram'; // Platforma turi, hozir faqat YouTube va Instagram qo‘llanadi
 export type MediaType = 'video' | 'audio';      // Media turi: video yoki audio
-export type VideoHeight = 720 | 1080 | 2160;    // Video balandligi (faqat bu uchta variant qo‘llanadi)
+export type VideoHeight = 360 | 480 | 720 | 1080 | 2160;    // Video balandligi (faqat bu uchta variant qo‘llanadi)
 
 export interface DownloadFormat {
   type: 'audio';   // Audio yuklash turi
