@@ -1,0 +1,26 @@
+# --- Xizmatlar ---
+services:
+  telegram-bot-api:
+    # Telegram Bot API serveri uchun tayyor image
+    image: aiogram/telegram-bot-api:latest
+
+    # Muhit o‘zgaruvchilari: Telegram API ID va HASH
+    environment:
+      TELEGRAM_API_ID: ${APP_ID}     # .env fayldan olingan App ID
+      TELEGRAM_API_HASH: ${APP_HASH} # .env fayldan olingan App Hash
+
+    # Maʼlumotlarni saqlash uchun volume
+    volumes:
+      - telegram-bot-api-data:/var/lib/telegram-bot-api
+
+    # Port mapping: tashqi 8081 → konteyner 8081
+    ports:
+      - "8081:8081"
+
+    # Agar konteyner tushsa, avtomatik qayta ishga tushirish
+    restart: unless-stopped
+
+# --- Volumes --- 
+# Telegram Bot API maʼlumotlarini saqlash uchun doimiy storage
+volumes:
+  telegram-bot-api-data:
