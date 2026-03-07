@@ -38,7 +38,8 @@ export async function downloadInstagram(
     '-f', `bestvideo[height<=${h}]+bestaudio/best[height<=${h}]/best`,
     '--merge-output-format', 'mp4',
     '--concurrent-fragments', '4',
-    '--postprocessor-args', 'ffmpeg:-movflags +faststart -c copy',
+    // ✅ Instagram uchun ham xuddi shu fix
+    '--postprocessor-args', 'ffmpeg:-c:v libx264 -c:a aac -vsync vfr -movflags +faststart',
     '--output', outputPath,
     url,
   ];

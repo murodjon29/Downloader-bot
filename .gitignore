@@ -5,3 +5,4 @@ downloads/
 *.mp4
 *.mp3
 *.webm
+/bot.log

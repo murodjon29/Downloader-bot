@@ -50,7 +50,7 @@ export async function downloadYouTube(
       '--merge-output-format', 'mp4',
       '--no-playlist',
       '--concurrent-fragments', '4',
-      '--postprocessor-args', 'ffmpeg:-movflags +faststart -c copy',
+      '--postprocessor-args', 'ffmpeg:-c copy -avoid_negative_ts make_zero -movflags +faststart',
       '--output', outputPath,
       url,
     ];

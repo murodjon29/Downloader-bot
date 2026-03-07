@@ -41,25 +41,45 @@ function pickVideoFormat(formats: YtDlpFormat[], height: VideoHeight): YtDlpForm
 
   const isAvc = (f: YtDlpFormat) => f.vcodec?.startsWith('avc') ?? false;
 
-  if (height !== 2160) {
-    const exact = videoOnly
-      .filter((f) => f.height === height && isAvc(f))
+  // 4K uchun alohida logika — AVC codec ko'pincha yo'q, shuning uchun har qanday codec
+  if (height === 2160) {
+    // 1. Aynan 2160p — har qanday codec, eng yuqori bitrate
+    const exact4k = videoOnly
+      .filter((f) => f.height === 2160)
       .sort((a, b) => (b.tbr ?? b.vbr ?? 0) - (a.tbr ?? a.vbr ?? 0))[0];
-    if (exact) return exact;
+    if (exact4k) return exact4k;
+
+    // 2. 1440p — fallback
+    const hd = videoOnly
+      .filter((f) => f.height && f.height >= 1440)
+      .sort((a, b) => (b.height ?? 0) - (a.height ?? 0) || (b.tbr ?? b.vbr ?? 0) - (a.tbr ?? a.vbr ?? 0))[0];
+    if (hd) return hd;
+
+    // 3. Eng yuqori mavjud sifat
+    return videoOnly
+      .sort((a, b) => (b.height ?? 0) - (a.height ?? 0))[0];
   }
 
+  // Boshqa sifatlar uchun avvalgi logika
+  // 1. Exact height + H.264
+  const exact = videoOnly
+    .filter((f) => f.height === height && isAvc(f))
+    .sort((a, b) => (b.tbr ?? b.vbr ?? 0) - (a.tbr ?? a.vbr ?? 0))[0];
+  if (exact) return exact;
+
+  // 2. Exact height + har qanday codec
   const exactAny = videoOnly
     .filter((f) => f.height === height)
     .sort((a, b) => (b.tbr ?? b.vbr ?? 0) - (a.tbr ?? a.vbr ?? 0))[0];
   if (exactAny) return exactAny;
 
-  if (height !== 2160) {
-    const below = videoOnly
-      .filter((f) => f.height && f.height <= height && isAvc(f))
-      .sort((a, b) => (b.height ?? 0) - (a.height ?? 0) || (b.tbr ?? b.vbr ?? 0) - (a.tbr ?? a.vbr ?? 0))[0];
-    if (below) return below;
-  }
+  // 3. <= height + H.264
+  const below = videoOnly
+    .filter((f) => f.height && f.height <= height && isAvc(f))
+    .sort((a, b) => (b.height ?? 0) - (a.height ?? 0) || (b.tbr ?? b.vbr ?? 0) - (a.tbr ?? a.vbr ?? 0))[0];
+  if (below) return below;
 
+  // 4. <= height + har qanday codec
   return videoOnly
     .filter((f) => f.height && f.height <= height)
     .sort((a, b) => (b.height ?? 0) - (a.height ?? 0) || (b.tbr ?? b.vbr ?? 0) - (a.tbr ?? a.vbr ?? 0))[0];
@@ -81,10 +101,18 @@ function estimateSizeMB(
 ): number | undefined {
   const video = pickVideoFormat(formats, height);
   const audio = pickAudioFormat(formats);
+
+  // Debug: agar video topilmasa undefined qaytarmasin
   const videoBytes = video ? formatBytes(video, duration) : undefined;
   const audioBytes = audio ? formatBytes(audio, duration) : undefined;
+
   if (!videoBytes && !audioBytes) return undefined;
-  return Math.round(((videoBytes ?? 0) + (audioBytes ?? 0)) / (1024 * 1024));
+
+  const total = (videoBytes ?? 0) + (audioBytes ?? 0);
+  const mb = Math.round(total / (1024 * 1024));
+
+  // ✅ 0 MB ko'rsatmaydi — undefined qaytaradi
+  return mb > 0 ? mb : undefined;
 }
 
 export async function fetchMetadata(url: string, platform: Platform): Promise<VideoMetadata> {
@@ -102,9 +130,23 @@ export async function fetchMetadata(url: string, platform: Platform): Promise<Vi
   const formats: YtDlpFormat[] = data.formats ?? [];
   const duration: number = data.duration ?? 0;
 
-  const availableHeights = SUPPORTED_HEIGHTS.filter((h) =>
-    formats.some((f) => f.height && f.height >= h * 0.9),
-  );
+  // Mavjud balandliklarni aniqlash
+  const availableHeights = SUPPORTED_HEIGHTS.filter((h) => {
+    if (h === 2160) {
+      // 4K uchun: aynan 2160p yoki 1440p+ mavjudligini tekshirish
+      return formats.some(
+        (f) =>
+          f.vcodec && f.vcodec !== 'none' &&
+          f.height && f.height >= 1440,
+      );
+    }
+    // Boshqalar uchun: ±10% tolerance
+    return formats.some(
+      (f) =>
+        f.vcodec && f.vcodec !== 'none' &&
+        f.height && f.height >= h * 0.9,
+    );
+  });
 
   if (availableHeights.length === 0) availableHeights.push(360);
 
