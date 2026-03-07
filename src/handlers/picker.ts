@@ -220,9 +220,8 @@ function heightLabel(height: VideoHeight, sizeMB?: number): string {
 export function buildTypeKeyboard(): InlineKeyboard {
   return new InlineKeyboard()
     .text('🎬 Video', 'type:video')
-    .text('🎵 Audio MP3', 'type:audio');
+    .text('🎵 Audio', 'type:audio');
 }
-
 export function buildQualityKeyboard(meta: VideoMetadata): InlineKeyboard {
   const kb = new InlineKeyboard();
   for (const height of meta.availableHeights) {
